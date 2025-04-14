@@ -1,25 +1,21 @@
-/* gulpfile.js */
+'use strict';
 
-const uswds = require("@uswds/compile");
+const { src, dest } = require('gulp');
+const autoprefixer = require('gulp-autoprefixer');
+const sass = require('gulp-sass')(require('sass'));
 
-/**
- * USWDS version
- */
+function handleError(error) {
+  console.error(error.message);
+  return this.emit("end");
+}
 
-uswds.settings.version = 3;
+function buildStyles() {
+  return src(['sass/main.scss'])
+    .pipe(sass({
+      outputStyle: 'compressed',
+      includePaths: ['./node_modules/@uswds/uswds/packages'],
+    }).on('error', handleError))
+    .pipe(dest('_site/'));
+}
 
-/**
- * Path settings
- * Set as many as you need
- */
-
-uswds.paths.dist.css = "./assets/css";
-uswds.paths.dist.theme = "./sass";
-
-/**
- * Exports
- * Add as many as you need
- */
-
-exports.init = uswds.init;
-exports.compile = uswds.compile;
+exports.compile = buildStyles;
