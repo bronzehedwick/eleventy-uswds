@@ -1,2 +1,8 @@
-@use 'uswds-elements';
-@use 'usa-tag';
+@forward 'uswds-core' with (
+  $theme-show-compile-warnings: false,
+  $theme-show-notifications: false,
+  $theme-card-border-radius: 'sm',
+);
+@forward 'uswds-elements';
+@forward 'usa-tag';
+@forward 'usa-card';
